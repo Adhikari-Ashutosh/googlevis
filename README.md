@@ -3,7 +3,6 @@
 ## Installation and basic usage:
 
 ### Installation
-- 
 - <code>git clone https://github.com/Adhikari-Ashutosh/googlevis</code>
 - <code>cd YOUR_DIRNAME</code>
 - <code>yarn</code>
