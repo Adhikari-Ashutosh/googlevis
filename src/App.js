@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import {FormData} from "formdata-node";
 
 function App() {
     const [mouseData, setMouseData] = useState({ x: 0, y: 0 });
@@ -41,13 +43,40 @@ function App() {
         ctx.stroke();
     };
     const Capture = () =>{
-      const uri = canvasRef.current.toDataURL();
+      const uri = canvasRef.current.toDataURL("image/png");
       var link = document.createElement("a");
       link.href = uri;
-      document.body.appendChild(link);
-      link.download = "Test"
-      link.click();
-      document.body.removeChild(link);
+      console.log(uri);
+      
+      
+      let data = new FormData();
+      data.set("pngstring",uri)
+      
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://127.0.0.1:5000/test',
+        headers: { 
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Methods": "*"
+        },
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        alert(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
+
+    //   document.body.appendChild(link);
+    //   link.download = "Test"
+    //   link.click();
+    //   document.body.removeChild(link);
       
     }
 
